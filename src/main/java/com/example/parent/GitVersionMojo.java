@@ -33,9 +33,9 @@ public class GitVersionMojo extends AbstractMojo {
     getLog().info("basedir: " + basedir);
 
     try (Repository repo = FileRepositoryBuilder.create(basedir)) {
-        String branch = repo.getBranch();
-        getLog().info("Branch: " + branch);
-        for (Ref ref : repo.getRefDatabase().getRefsByPrefix(R_TAGS)) {
+      String branch = repo.getBranch();
+      getLog().info("Branch: " + branch);
+      for (Ref ref : repo.getRefDatabase().getRefsByPrefix(R_TAGS)) {
         getLog().info("Tag: " + ref.getName());
       }
     } catch (IOException e) {
