@@ -55,7 +55,7 @@ public class GitVersionMojo extends AbstractMojo {
 
       getLog().info("tags:");
       for (Ref ref : repo.getRefDatabase().getRefsByPrefix(R_TAGS)) {
-        getLog().info("Tag: " + ref.getName());
+        getLog().info("Tag: " + ref.getName().substring(R_TAGS.length()));
       }
     } catch (IOException e) {
       throw new MojoExecutionException(e);
