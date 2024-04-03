@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.example.parent</groupId>
+  <artifactId>git-version-plugin</artifactId>
+  <version>${revision}</version>
+  <packaging>maven-plugin</packaging>
+
+  <name>Example Maven Plugin</name>
+  <description>Plugin that generates vert.x handler interface and POJOs from an OPEN API definition</description>
+  <prerequisites>
+    <maven>${maven.version}</maven>
+  </prerequisites>
+
+  <properties>
+    <revision>1.0.0-SNAPSHOT</revision>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!--deps-->
+    <jgit.version>6.9.0.202403050737-r</jgit.version>
+
+    <!--plugin dev-->
+    <maven.version>3.9.6</maven.version>
+    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
+    <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
+
+    <!--plugins-->
+    <exec-maven-plugin.version>3.2.0</exec-maven-plugin.version>
+    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+    <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
+    <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
+    <maven-shade-plugin.version>3.5.2</maven-shade-plugin.version>
+    <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
+    <maven-resource-plugin.version>3.3.1</maven-resource-plugin.version>
+    <spotless.version>2.43.0</spotless.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>${jgit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>${maven-plugin-plugin.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>${maven.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>${maven-plugin-plugin.version}</version>
+          <configuration>
+            <goalPrefix>openapi</goalPrefix>
+          </configuration>
+          <executions>
+            <execution>
+              <id>help-mojo</id>
+              <goals>
+                <goal>helpmojo</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>${spotless.version}</version>
+        <configuration>
+          <pom>
+            <includes>
+              <include>pom.xml</include>
+            </includes>
+            <sortPom>
+              <encoding>UTF-8</encoding>
+              <lineSeparator>${line.separator}</lineSeparator>
+              <expandEmptyElements>false</expandEmptyElements>
+              <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
+              <keepBlankLines>true</keepBlankLines>
+              <nrOfIndentSpace>2</nrOfIndentSpace>
+              <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+              <sortDependencies>scope,group,artifactId</sortDependencies>
+              <sortPlugins>groupId,artifactId</sortPlugins>
+            </sortPom>
+          </pom>
+          <markdown>
+            <includes>
+              <include>**/*.md</include>
+            </includes>
+            <flexmark />
+          </markdown>
+          <java>
+            <includes>
+              <include>src/main/**/*.java</include>
+              <include>src/test/**/*.java</include>
+            </includes>
+            <googleJavaFormat>
+              <style>GOOGLE</style>
+              <reflowLongStrings>true</reflowLongStrings>
+            </googleJavaFormat>
+            <formatAnnotations />
+            <licenseHeader>
+              <content>/* Licensed under Apache-2.0 $YEAR. */</content>
+              <delimiter>package</delimiter>
+            </licenseHeader>
+          </java>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>${maven-plugin-plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>
