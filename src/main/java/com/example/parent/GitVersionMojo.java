@@ -2,7 +2,6 @@
 package com.example.parent;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
-import static org.eclipse.jgit.lib.Constants.HEAD;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 import java.io.File;
@@ -13,11 +12,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 @Mojo(name = "get-version", defaultPhase = GENERATE_SOURCES)
@@ -26,37 +22,56 @@ public class GitVersionMojo extends AbstractMojo {
   @Parameter(property = "project", readonly = true)
   private MavenProject project;
 
+  @Parameter(property = "get-version.masterBranch", readonly = true, defaultValue = "master")
+  private String masterBranch;
+
+  @Parameter(property = "get-version.versionProperty", readonly = true, defaultValue = "revision")
+  private String versionProperty;
+
+  private boolean useSnapshotVersion = false;
+
   @Override
   public void execute() throws MojoExecutionException {
-    String version = "1.2.3";
-    getLog().info("Git hash: " + version);
-
-    project.getProperties().put("exampleVersion", version);
-    getLog().info("################# Properties #################");
-    project.getProperties().forEach((k, v) -> getLog().info(k + ": " + v));
-    getLog().info("################# Properties #################");
+    getLog().info("masterBranch: " + masterBranch);
+    getLog().info("versionProperty: " + versionProperty);
 
     File basedir = project.getBasedir();
-    getLog().info("basedir: " + basedir);
     File gitDir = Paths.get(basedir.toURI()).resolve(".git").toFile();
-    getLog().info(".git: " + gitDir);
+    getLog().info("opening git from: " + gitDir);
 
     try (Repository repo = FileRepositoryBuilder.create(gitDir)) {
-      getLog().info("Branch: " + repo.getBranch());
+      String branch = repo.getBranch();
+      getLog().info("Branch: " + branch);
 
-      try (RevWalk revWalk = new RevWalk(repo)) {
-        ObjectId head = repo.resolve(HEAD);
-        revWalk.markStart(revWalk.parseCommit(head));
-
-        for (RevCommit commit : revWalk) {
-          getLog().info("Commit: " + commit.getFullMessage());
-        }
+      if (masterBranch.equals(branch)) {
+        getLog().info("currently on master branch, use a concrete version");
+        useSnapshotVersion = false;
+      } else {
+        getLog().info("currently on a development branch, use a snapshot version");
+        useSnapshotVersion = true;
       }
 
-      getLog().info("tags:");
-      for (Ref ref : repo.getRefDatabase().getRefsByPrefix(R_TAGS)) {
-        getLog().info("Tag: " + ref.getName().substring(R_TAGS.length()));
-      }
+      Ref lastTag = repo.getRefDatabase().getRefsByPrefix(R_TAGS).getLast();
+      String version = lastTag.getName().substring(R_TAGS.length());
+      project.getProperties().put(versionProperty, version);
+      getLog()
+          .info(
+              String.format(
+                  "updated property: %s=%s",
+                  versionProperty, project.getProperties().get(versionProperty)));
+
+      //      // Create a new tag
+      //      String tagName = "v1.0.0-" + System.currentTimeMillis();
+      //      try (Git git = new Git(repo)) {
+      //        git.tag().setName(tagName).call();
+      //        // might need this for the remote?
+      ////        git.push().setPushTags().call();
+      //      } catch (GitAPIException e) {
+      //        throw new MojoExecutionException("Failed to create git tag", e);
+      //      }
+      //
+      //      getLog().info("Created git tag: " + tagName);
+
     } catch (IOException e) {
       throw new MojoExecutionException(e);
     }
