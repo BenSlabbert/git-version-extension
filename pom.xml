@@ -7,11 +7,11 @@
   <version>${revision}</version>
   <packaging>jar</packaging>
 
-  <name>Example Maven Plugin</name>
-  <description>Plugin that generates vert.x handler interface and POJOs from an OPEN API definition</description>
+  <name>some name</name>
+  <description>some description</description>
 
   <properties>
-    <revision>1.0.0-SNAPSHOT</revision>
+    <revision>0.0.0-SNAPSHOT</revision>
     <java.version>11</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -26,17 +26,14 @@
     <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
 
     <!--plugins-->
-    <exec-maven-plugin.version>3.2.0</exec-maven-plugin.version>
     <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
     <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
-    <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
-    <maven-shade-plugin.version>3.5.2</maven-shade-plugin.version>
     <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
     <maven-resource-plugin.version>3.3.1</maven-resource-plugin.version>
-    <sisu-maven-plugin.version>0.3.5</sisu-maven-plugin.version>
+    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <spotless.version>2.43.0</spotless.version>
     <plexus-component.version>2.1.0</plexus-component.version>
   </properties>
@@ -131,6 +128,11 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${maven-failsafe-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
         <version>${maven-install-plugin.version}</version>
       </plugin>
@@ -152,6 +154,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
