@@ -2,6 +2,6 @@
   <extension>
     <groupId>com.example.parent</groupId>
     <artifactId>git-version-extension</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </extension>
 </extensions>

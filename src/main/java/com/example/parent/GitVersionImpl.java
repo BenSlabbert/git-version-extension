@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 @Component(role = GitVersion.class)
 class GitVersionImpl implements GitVersion {
 
+  private static final String DEFAULT_VERSION = "0.0.0-SNAPSHOT";
+
   @Requirement private Logger logger;
 
   GitVersionImpl() {}
@@ -43,13 +45,12 @@ class GitVersionImpl implements GitVersion {
 
       if (isNotClean(repo)) {
         logger.warn("branch is not clean, using SNAPSHOT version");
-        return "0.0.0-SNAPSHOT";
+        return DEFAULT_VERSION;
       }
 
       List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
-
       if (refs.isEmpty()) {
-        return "0.0.0-SNAPSHOT";
+        return DEFAULT_VERSION;
       }
 
       Ref lastTag = refs.get(refs.size() - 1);
