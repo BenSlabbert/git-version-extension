@@ -19,3 +19,4 @@ Add the following to your `.mvn/extensions.xml`:
   </extension>
 </extensions>
 ```
+
