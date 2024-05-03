@@ -10,6 +10,14 @@
   <name>Git Version Extension</name>
   <description>Sets a maven property to set a version for a multi module build</description>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub BenSlabbert Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/BenSlabbert/git-version-extension</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <revision>0.0.0-SNAPSHOT</revision>
     <java.version>11</java.version>
