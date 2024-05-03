@@ -13,7 +13,6 @@ jobs:
     timeout-minutes: 30
     env:
       GH_TOKEN: "${{ secrets.GH_TOKEN }}"
-      KEY: "value"
     steps:
     - uses: "actions/checkout@v4"
     - name: "Set up JDK 11"
