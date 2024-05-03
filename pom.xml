@@ -78,6 +78,13 @@
         <artifactId>spotless-maven-plugin</artifactId>
         <version>${spotless.version}</version>
         <configuration>
+          <yaml>
+            <includes>
+              <include>**/*.yaml</include>
+              <include>**/*.yml</include>
+            </includes>
+            <jackson />
+          </yaml>
           <pom>
             <includes>
               <include>pom.xml</include>
