@@ -1,5 +1,5 @@
 ---
-name: "Java + Maven + Docker"
+name: "Build"
 "on":
   push:
     branches:
