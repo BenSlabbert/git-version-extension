@@ -13,7 +13,7 @@ Add the following to your `.mvn/extensions.xml`:
 ```xml
 <extensions>
   <extension>
-    <groupId>com.github.benslabbert</groupId>
+    <groupId>com.benslabbert</groupId>
     <artifactId>git-version-extension</artifactId>
     <version>VERSION</version>
   </extension>
