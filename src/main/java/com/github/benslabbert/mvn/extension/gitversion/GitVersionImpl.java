@@ -37,9 +37,10 @@ class GitVersionImpl implements GitVersion {
     try (Repository repo = FileRepositoryBuilder.create(gitDir)) {
       String branch = repo.getBranch();
 
-      boolean useSnapshotVersion = !"master".equals(branch);
+      boolean useSnapshotVersion = !"main".equals(branch);
 
       if (useSnapshotVersion) {
+        logger.warn("not on main branch, using SNAPSHOT version");
         return branch + "-SNAPSHOT";
       }
 
