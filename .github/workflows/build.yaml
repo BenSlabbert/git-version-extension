@@ -26,5 +26,5 @@ jobs:
         java-package: "jdk"
         cache: "maven"
     - run: "git fetch --prune --unshallow --tags"
-    - run: "make 'M=mvn -s settings.xml' fmtCheck"
     - run: "make 'M=mvn -s settings.xml' build"
+    - run: "make 'M=mvn -s settings.xml' fmtCheck"
