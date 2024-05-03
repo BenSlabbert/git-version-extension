@@ -1,7 +1,7 @@
 <extensions>
-  <extension>
-    <groupId>com.github.benslabbert</groupId>
-    <artifactId>git-version-extension</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
-  </extension>
+<!--  <extension>-->
+<!--    <groupId>com.github.benslabbert</groupId>-->
+<!--    <artifactId>git-version-extension</artifactId>-->
+<!--    <version>0.0.0-SNAPSHOT</version>-->
+<!--  </extension>-->
 </extensions>
