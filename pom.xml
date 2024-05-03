@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.example.parent</groupId>
+  <groupId>com.github.benslabbert</groupId>
   <artifactId>git-version-extension</artifactId>
   <version>${revision}</version>
   <packaging>jar</packaging>
 
-  <name>some name</name>
-  <description>some description</description>
+  <name>Git Version Extension</name>
+  <description>Sets a maven property to set a version for a multi module build</description>
 
   <properties>
     <revision>0.0.0-SNAPSHOT</revision>
