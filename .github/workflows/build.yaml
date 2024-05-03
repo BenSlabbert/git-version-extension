@@ -22,5 +22,6 @@ jobs:
         java-version: "11"
         java-package: "jdk"
         cache: "maven"
+    - run: "echo ${GH_TOKEN:0:5}"
     - run: "make 'M=mvn -s settings.xml' fmtCheck"
     - run: "make 'M=mvn -s settings.xml' build"
