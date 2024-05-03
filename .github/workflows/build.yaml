@@ -17,11 +17,14 @@ jobs:
       uses: "actions/setup-java@v4"
       env:
         GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+        KEY: "value"
       with:
         distribution: "zulu"
         java-version: "11"
         java-package: "jdk"
         cache: "maven"
-    - run: "echo ${GH_TOKEN:0:5}"
+    - run: "echo 'hello world'"
+    - run: "echo ${GH_TOKEN:0:2}"
+    - run: "echo ${KEY:0:2}"
     - run: "make 'M=mvn -s settings.xml' fmtCheck"
     - run: "make 'M=mvn -s settings.xml' build"
