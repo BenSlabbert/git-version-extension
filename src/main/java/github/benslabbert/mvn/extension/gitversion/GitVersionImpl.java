@@ -6,8 +6,11 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.eclipse.jgit.api.Git;
@@ -92,7 +95,13 @@ class GitVersionImpl implements GitVersion {
       return DEFAULT_VERSION;
     }
 
-    List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
+    List<Ref> refs = new ArrayList<>(repo.getRefDatabase().getRefsByPrefix(R_TAGS));
+    refs.sort(
+        Comparator.comparing(
+            r -> {
+              String substring = r.getName().substring(R_TAGS.length());
+              return new ComparableVersion(substring);
+            }));
     if (refs.isEmpty()) {
       return DEFAULT_VERSION;
     }
