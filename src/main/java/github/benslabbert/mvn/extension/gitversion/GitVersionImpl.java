@@ -6,11 +6,13 @@ import static org.eclipse.jgit.lib.Constants.R_TAGS;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
@@ -36,6 +38,28 @@ class GitVersionImpl implements GitVersion {
 
     try (Repository repo = FileRepositoryBuilder.create(gitDir)) {
       String branch = repo.getBranch();
+      logger.info("running on branch: {}", branch);
+
+      // if we are on a detached HEAD the branch name is a commit hash
+      Optional<ObjectId> resolve = resolve(repo, branch);
+      if (resolve.isPresent()) {
+        logger.info("we can resolve this branch name as a commit");
+        List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
+        if (refs.isEmpty()) {
+          logger.info("no tags yet, use default version");
+          return DEFAULT_VERSION;
+        }
+
+        for (Ref ref : refs) {
+          ObjectId objectId = ref.getObjectId();
+          if (null != objectId && objectId.equals(resolve.get())) {
+            logger.info("found matching tag: {} ", ref.getName());
+            return ref.getName().substring(R_TAGS.length());
+          }
+        }
+
+        logger.info("no matching refs found for hash: {}", branch);
+      }
 
       boolean useSnapshotVersion = !"main".equals(branch);
 
@@ -56,6 +80,14 @@ class GitVersionImpl implements GitVersion {
 
       Ref lastTag = refs.get(refs.size() - 1);
       return lastTag.getName().substring(R_TAGS.length());
+    }
+  }
+
+  private Optional<ObjectId> resolve(Repository repo, String hash) {
+    try {
+      return Optional.of(repo.resolve(hash));
+    } catch (Exception e) {
+      return Optional.empty();
     }
   }
 
