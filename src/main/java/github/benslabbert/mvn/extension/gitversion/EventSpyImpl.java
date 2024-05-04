@@ -1,5 +1,5 @@
 /* Licensed under Apache-2.0 2024. */
-package com.benslabbert.mvn.extension.gitversion;
+package github.benslabbert.mvn.extension.gitversion;
 
 import java.io.IOException;
 import java.util.Map;
