@@ -27,4 +27,4 @@ jobs:
         cache: "maven"
     - run: "git fetch --prune --unshallow --tags"
     - run: "make 'M=mvn -s settings.xml' fmtCheck"
-    - run: "E=$EPOCHSECONDS make 'M=mvn -s settings.xml -Drevision=\"$E\"' build"
+    - run: "make 'M=mvn -s settings.xml' build"
