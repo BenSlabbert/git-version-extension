@@ -1,6 +1,7 @@
 /* Licensed under Apache-2.0 2024. */
 package github.benslabbert.mvn.extension.gitversion;
 
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
 import java.io.File;
@@ -40,47 +41,64 @@ class GitVersionImpl implements GitVersion {
       String branch = repo.getBranch();
       logger.info("running on branch: {}", branch);
 
+      if (isKnownBranch(repo, branch)) {
+        logger.info("we are on a normal branch");
+        return getVersionForBranchName(repo, branch);
+      }
+
       // if we are on a detached HEAD the branch name is a commit hash
       Optional<ObjectId> resolve = resolve(repo, branch);
-      if (resolve.isPresent()) {
-        logger.info("we can resolve this branch name as a commit");
-        List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
-        if (refs.isEmpty()) {
-          logger.info("no tags yet, use default version");
-          return DEFAULT_VERSION;
-        }
 
-        for (Ref ref : refs) {
-          ObjectId objectId = ref.getObjectId();
-          if (null != objectId && objectId.equals(resolve.get())) {
-            logger.info("found matching tag: {} ", ref.getName());
-            return ref.getName().substring(R_TAGS.length());
-          }
-        }
-
-        logger.info("no matching refs found for hash: {}", branch);
-      }
-
-      boolean useSnapshotVersion = !"main".equals(branch);
-
-      if (useSnapshotVersion) {
-        logger.warn("not on main branch, using SNAPSHOT version");
-        return branch + "-SNAPSHOT";
-      }
-
-      if (isNotClean(repo)) {
-        logger.warn("branch is not clean, using SNAPSHOT version");
+      if (resolve.isEmpty()) {
+        logger.warn("failed to resolve branch name as a commit, using default version");
         return DEFAULT_VERSION;
       }
 
+      logger.info("we can resolve this branch name as a commit");
       List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
       if (refs.isEmpty()) {
+        logger.info("no tags yet, use default version");
         return DEFAULT_VERSION;
       }
 
-      Ref lastTag = refs.get(refs.size() - 1);
-      return lastTag.getName().substring(R_TAGS.length());
+      for (Ref ref : refs) {
+        ObjectId objectId = ref.getObjectId();
+        if (null != objectId && objectId.equals(resolve.get())) {
+          logger.info("found matching tag: {} ", ref.getName());
+          return ref.getName().substring(R_TAGS.length());
+        }
+      }
+
+      logger.info("no matching refs found for hash: {} using default version", branch);
+      return DEFAULT_VERSION;
     }
+  }
+
+  private boolean isKnownBranch(Repository repo, String branch) throws IOException {
+    return repo.getRefDatabase().getRefsByPrefix(R_HEADS).stream()
+        .anyMatch(s -> s.getName().substring(R_HEADS.length()).equals(branch));
+  }
+
+  private String getVersionForBranchName(Repository repo, String branch) throws IOException {
+    boolean useSnapshotVersion = !"main".equals(branch);
+
+    if (useSnapshotVersion) {
+      logger.warn("not on main branch, using SNAPSHOT version");
+      return branch + "-SNAPSHOT";
+    }
+
+    if (isNotClean(repo)) {
+      logger.warn("branch is not clean, using SNAPSHOT version");
+      return DEFAULT_VERSION;
+    }
+
+    List<Ref> refs = repo.getRefDatabase().getRefsByPrefix(R_TAGS);
+    if (refs.isEmpty()) {
+      return DEFAULT_VERSION;
+    }
+
+    Ref lastTag = refs.get(refs.size() - 1);
+    return lastTag.getName().substring(R_TAGS.length());
   }
 
   private Optional<ObjectId> resolve(Repository repo, String hash) {
