@@ -26,6 +26,18 @@
           </releases>
         </repository>
       </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/BenSlabbert/git-version-extension</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+        </pluginRepository>
+      </pluginRepositories>
     </profile>
   </profiles>
 
