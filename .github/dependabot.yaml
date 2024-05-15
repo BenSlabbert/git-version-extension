@@ -1,11 +1,21 @@
 ---
 version: 2
+registries:
+  mvn-global:
+    type: "maven-repository"
+    url: "https://repo.maven.apache.org/maven2"
+  github.BenSlabbert:
+    type: "maven-repository"
+    url: "https://maven.pkg.github.com/BenSlabbert/*"
+    username: "BenSlabbert"
+    token: "${{ secrets.GH_TOKEN }}"
 updates:
 - package-ecosystem: "maven"
   directory: "/"
   schedule:
     interval: "daily"
   open-pull-requests-limit: 10
+  registries: "*"
   labels:
   - "dependencies"
 - package-ecosystem: "github-actions"
