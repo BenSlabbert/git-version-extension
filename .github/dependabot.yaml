@@ -3,7 +3,7 @@ version: 2
 registries:
   github:
     type: "maven-repository"
-    url: "https://maven.pkg.github.com/BenSlabbert/*"
+    url: "https://maven.pkg.github.com/BenSlabbert/vertx-dagger-bom"
     username: "BenSlabbert"
     token: "${{ secrets.GH_TOKEN }}"
 updates:
