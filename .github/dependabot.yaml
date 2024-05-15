@@ -4,7 +4,7 @@ registries:
   mvn-global:
     type: "maven-repository"
     url: "https://repo.maven.apache.org/maven2"
-  github.BenSlabbert:
+  github:
     type: "maven-repository"
     url: "https://maven.pkg.github.com/BenSlabbert/*"
     username: "BenSlabbert"
