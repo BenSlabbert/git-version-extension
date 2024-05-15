@@ -1,9 +1,6 @@
 ---
 version: 2
 registries:
-  mvn-global:
-    type: "maven-repository"
-    url: "https://repo.maven.apache.org/maven2"
   github:
     type: "maven-repository"
     url: "https://maven.pkg.github.com/BenSlabbert/*"
