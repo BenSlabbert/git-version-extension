@@ -2,13 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>github.benslabbert</groupId>
+  <parent>
+    <groupId>github.benslabbert</groupId>
+    <artifactId>vertx-dagger-bom</artifactId>
+    <version>1.0.4</version>
+  </parent>
+
   <artifactId>git-version-extension</artifactId>
   <version>${revision}</version>
   <packaging>jar</packaging>
 
   <name>Git Version Extension</name>
-  <description>Sets a maven property to set a version for a multi module build</description>
+  <description>Sets a maven property to set a version for a multi-module build</description>
 
   <distributionManagement>
     <repository>
@@ -19,32 +24,14 @@
   </distributionManagement>
 
   <properties>
-    <revision>0.0.0-SNAPSHOT</revision>
     <java.version>11</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!--deps-->
     <jgit.version>6.9.0.202403050737-r</jgit.version>
 
-    <!--plugin dev-->
-    <maven.version>3.9.6</maven.version>
-    <maven-plugin-plugin.version>3.11.0</maven-plugin-plugin.version>
-    <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
-
     <!--plugins-->
-    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-    <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
-    <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
-    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
-    <maven-install-plugin.version>3.1.2</maven-install-plugin.version>
-    <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
-    <maven-resource-plugin.version>3.3.1</maven-resource-plugin.version>
-    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-    <spotless.version>2.43.0</spotless.version>
     <plexus-component.version>2.2.0</plexus-component.version>
   </properties>
 
@@ -72,20 +59,6 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
-  <repositories>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/BenSlabbert/git-version-extension</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/BenSlabbert/git-version-extension</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <build>
     <plugins>
@@ -139,12 +112,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
-        <version>${maven-clean-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
         <configuration>
           <useIncrementalCompilation>false</useIncrementalCompilation>
           <source>${java.version}</source>
@@ -160,22 +131,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${maven-failsafe-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
-        <version>${maven-install-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>${maven-jar-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${maven-javadoc-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -188,17 +155,14 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>${maven-resource-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>${maven-site-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>${maven-source-plugin.version}</version>
         <executions>
           <execution>
             <id>attach-sources</id>
@@ -211,12 +175,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
-        <version>${flatten-maven-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.plexus</groupId>
