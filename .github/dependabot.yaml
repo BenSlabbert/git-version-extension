@@ -1,11 +1,6 @@
 ---
 version: 2
 registries:
-  maven:
-    type: "maven-repository"
-    url: "https://repo.maven.apache.org/maven2"
-    username: "${{ secrets.MVN_USERNAME }}"
-    password: "${{ secrets.MVN_PASSWORD }}"
   github:
     type: "maven-repository"
     url: "https://maven.pkg.github.com/BenSlabbert/vertx-dagger-bom"
