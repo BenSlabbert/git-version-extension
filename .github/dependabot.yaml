@@ -4,7 +4,8 @@ registries:
   github:
     type: "maven-repository"
     url: "https://maven.pkg.github.com/BenSlabbert/vertx-dagger-bom"
-    token: "${{ secrets.GH_TOKEN }}"
+    username: "BenSlabbert"
+    password: "${{ secrets.GH_TOKEN }}"
 updates:
 - package-ecosystem: "maven"
   directory: "/"
