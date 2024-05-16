@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.eclipse.jgit.api.Git;
@@ -96,7 +97,7 @@ class GitVersionImpl implements GitVersion {
     }
 
     List<Ref> refs = new ArrayList<>(repo.getRefDatabase().getRefsByPrefix(R_TAGS));
-    refs.sort(Comparator.comparing(GitVersionImpl::versionFromTag));
+    refs.sort(Comparator.comparing(r -> new ComparableVersion(versionFromTag(r))));
     if (refs.isEmpty()) {
       return DEFAULT_VERSION;
     }
@@ -106,12 +107,15 @@ class GitVersionImpl implements GitVersion {
     return versionFromTag(lastTag);
   }
 
-  private static String versionFromTag(Ref tag) {
+  private String versionFromTag(Ref tag) {
     String version = tag.getName().substring(R_TAGS.length());
+    logger.info("versionFromTag: {}", version);
 
     if (version.startsWith("v")) {
       version = version.substring(1);
-      return new Semver(version, Semver.SemverType.STRICT).toString();
+      String string = new Semver(version, Semver.SemverType.STRICT).toString();
+      logger.info("trimmed v from version: {}", version);
+      return string;
     }
 
     return new Semver(version, Semver.SemverType.STRICT).toString();
