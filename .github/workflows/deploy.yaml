@@ -22,3 +22,9 @@ jobs:
     - run: "git fetch --prune --unshallow --tags"
     - run: "make 'M=mvn -s settings.xml' fmtCheck"
     - run: "make 'M=mvn -s settings.xml' deploy"
+    - name: "Release"
+      uses: "softprops/action-gh-release@v2"
+      with:
+        generate_release_notes: "true"
+        make_latest: "true"
+        token: "${{ secrets.GH_TOKEN }}"
