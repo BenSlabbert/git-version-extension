@@ -4,13 +4,13 @@ package github.benslabbert.mvn.extension.gitversion;
 import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
+import com.vdurmont.semver4j.Semver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.eclipse.jgit.api.Git;
@@ -68,7 +68,7 @@ class GitVersionImpl implements GitVersion {
         ObjectId objectId = ref.getObjectId();
         if (null != objectId && objectId.equals(resolve.get())) {
           logger.info("found matching tag: {} ", ref.getName());
-          return ref.getName().substring(R_TAGS.length());
+          return versionFromTag(ref);
         }
       }
 
@@ -96,18 +96,24 @@ class GitVersionImpl implements GitVersion {
     }
 
     List<Ref> refs = new ArrayList<>(repo.getRefDatabase().getRefsByPrefix(R_TAGS));
-    refs.sort(
-        Comparator.comparing(
-            r -> {
-              String substring = r.getName().substring(R_TAGS.length());
-              return new ComparableVersion(substring);
-            }));
+    refs.sort(Comparator.comparing(GitVersionImpl::versionFromTag));
     if (refs.isEmpty()) {
       return DEFAULT_VERSION;
     }
 
     Ref lastTag = refs.get(refs.size() - 1);
-    return lastTag.getName().substring(R_TAGS.length());
+    return versionFromTag(lastTag);
+  }
+
+  private static String versionFromTag(Ref tag) {
+    String version = tag.getName().substring(R_TAGS.length());
+
+    if (version.startsWith("v")) {
+      version = version.substring(1);
+      return new Semver(version, Semver.SemverType.STRICT).toString();
+    }
+
+    return version;
   }
 
   private Optional<ObjectId> resolve(Repository repo, String hash) {
