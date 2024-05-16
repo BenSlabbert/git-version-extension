@@ -30,6 +30,7 @@
 
     <!--deps-->
     <jgit.version>6.9.0.202403050737-r</jgit.version>
+    <semver4j.version>3.1.0</semver4j.version>
 
     <!--plugins-->
     <plexus-component.version>2.2.0</plexus-component.version>
@@ -45,6 +46,11 @@
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-component-annotations</artifactId>
       <version>${plexus-component.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.vdurmont</groupId>
+      <artifactId>semver4j</artifactId>
+      <version>${semver4j.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
