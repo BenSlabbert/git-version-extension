@@ -102,6 +102,7 @@ class GitVersionImpl implements GitVersion {
     }
 
     Ref lastTag = refs.get(refs.size() - 1);
+    logger.warn("lastTag: {}", lastTag);
     return versionFromTag(lastTag);
   }
 
@@ -113,7 +114,7 @@ class GitVersionImpl implements GitVersion {
       return new Semver(version, Semver.SemverType.STRICT).toString();
     }
 
-    return version;
+    return new Semver(version, Semver.SemverType.STRICT).toString();
   }
 
   private Optional<ObjectId> resolve(Repository repo, String hash) {
