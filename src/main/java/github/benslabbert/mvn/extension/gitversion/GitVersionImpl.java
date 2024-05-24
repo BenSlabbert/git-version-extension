@@ -88,7 +88,7 @@ class GitVersionImpl implements GitVersion {
 
     if (useSnapshotVersion) {
       logger.warn("not on main branch, using SNAPSHOT version");
-      return branch + "-SNAPSHOT";
+      return DEFAULT_VERSION;
     }
 
     if (isNotClean(repo)) {
