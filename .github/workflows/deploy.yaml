@@ -20,8 +20,8 @@ jobs:
         java-package: "jdk"
         cache: "maven"
     - run: "git fetch --prune --unshallow --tags"
-    - run: "make 'M=mvn -s settings.xml' fmtCheck"
-    - run: "make 'M=mvn -s settings.xml' deploy"
+    - run: "make 'M=mvn -s settings.xml -T 1C' fmtCheck"
+    - run: "make 'M=mvn -s settings.xml -T 1C' deploy"
     - name: "Release"
       uses: "softprops/action-gh-release@v2"
       with:
