@@ -28,7 +28,7 @@
     <semver4j.version>3.1.0</semver4j.version>
 
     <!--plugins-->
-    <maven.version>3.9.8</maven.version>
+    <maven.version>3.9.9</maven.version>
     <plexus-component.version>2.2.0</plexus-component.version>
     <spotless.version>2.43.0</spotless.version>
   </properties>
