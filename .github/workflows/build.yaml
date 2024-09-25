@@ -31,3 +31,6 @@ jobs:
     - run: "make 'M=mvn -s settings.xml -T 1C' build"
     - name: "Submit Dependency Snapshot"
       uses: "advanced-security/maven-dependency-submission-action@v4"
+      with:
+        token: "${{ secrets.GH_TOKEN }}"
+        maven-args: "-s settings.xml"
