@@ -29,3 +29,5 @@ jobs:
     - run: "git fetch --prune --unshallow --tags"
     - run: "make 'M=mvn -s settings.xml -T 1C' fmtCheck"
     - run: "make 'M=mvn -s settings.xml -T 1C' build"
+    - name: "Submit Dependency Snapshot"
+      uses: "advanced-security/maven-dependency-submission-action@v4"
