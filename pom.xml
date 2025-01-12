@@ -35,9 +35,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jgit</groupId>
-      <artifactId>org.eclipse.jgit</artifactId>
-      <version>${jgit.version}</version>
+      <groupId>com.vdurmont</groupId>
+      <artifactId>semver4j</artifactId>
+      <version>${semver4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
@@ -45,9 +45,9 @@
       <version>${plexus-component.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.vdurmont</groupId>
-      <artifactId>semver4j</artifactId>
-      <version>${semver4j.version}</version>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>${jgit.version}</version>
     </dependency>
     <dependency>
       <groupId>javax.inject</groupId>
@@ -89,7 +89,7 @@
               <keepBlankLines>true</keepBlankLines>
               <nrOfIndentSpace>2</nrOfIndentSpace>
               <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-              <sortDependencies>scope,group,artifactId</sortDependencies>
+              <sortDependencies>scope,groupId,artifactId</sortDependencies>
               <sortPlugins>groupId,artifactId</sortPlugins>
             </sortPom>
           </pom>
