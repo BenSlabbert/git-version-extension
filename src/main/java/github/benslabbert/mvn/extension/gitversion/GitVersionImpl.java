@@ -4,7 +4,6 @@ package github.benslabbert.mvn.extension.gitversion;
 import static org.eclipse.jgit.lib.Constants.R_HEADS;
 import static org.eclipse.jgit.lib.Constants.R_TAGS;
 
-import com.vdurmont.semver4j.Semver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.semver4j.internal.StrictParser;
 import org.slf4j.Logger;
 
 @Component(role = GitVersion.class)
@@ -113,12 +113,12 @@ class GitVersionImpl implements GitVersion {
 
     if (version.startsWith("v")) {
       version = version.substring(1);
-      String string = new Semver(version, Semver.SemverType.STRICT).toString();
+      String string = StrictParser.parse(version).toString();
       logger.info("trimmed v from version: {}", version);
       return string;
     }
 
-    return new Semver(version, Semver.SemverType.STRICT).toString();
+    return StrictParser.parse(version).toString();
   }
 
   private Optional<ObjectId> resolve(Repository repo, String hash) {
