@@ -23,7 +23,7 @@ jobs:
     - name: "Extract Current Tag"
       run: "echo \"TAG_NAME=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
     - name: "Deploy with Maven"
-      run: "mvn -s settings.xml clean spotless:check deploy -Drevision=$TAG_NAME"
+      run: "mvn -s settings.xml clean spotless:check deploy -Drevision=${TAG_NAME#v}"
     - name: "Release"
       uses: "softprops/action-gh-release@v2"
       with:
