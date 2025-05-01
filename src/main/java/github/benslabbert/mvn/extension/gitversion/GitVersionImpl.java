@@ -20,7 +20,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.semver4j.internal.StrictParser;
+import org.semver4j.Semver;
 import org.slf4j.Logger;
 
 @Component(role = GitVersion.class)
@@ -113,12 +113,12 @@ class GitVersionImpl implements GitVersion {
 
     if (version.startsWith("v")) {
       version = version.substring(1);
-      String string = StrictParser.parse(version).toString();
+      String string = new Semver(version).toString();
       logger.info("trimmed v from version: {}", version);
       return string;
     }
 
-    return StrictParser.parse(version).toString();
+    return new Semver(version).toString();
   }
 
   private Optional<ObjectId> resolve(Repository repo, String hash) {
