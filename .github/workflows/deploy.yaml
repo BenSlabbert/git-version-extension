@@ -20,8 +20,10 @@ jobs:
         java-package: "jdk"
         cache: "maven"
     - run: "git fetch --prune --unshallow --tags"
-    - run: "make 'M=mvn -s settings.xml -T 1C' fmtCheck"
-    - run: "make 'M=mvn -s settings.xml -T 1C' deploy"
+    - name: "Extract Current Tag"
+      run: "echo \"TAG_NAME=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+    - name: "Deploy with Maven"
+      run: "mvn -s settings.xml clean spotless:check deploy -Drevision=$TAG_NAME"
     - name: "Release"
       uses: "softprops/action-gh-release@v2"
       with:
