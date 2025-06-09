@@ -25,11 +25,11 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!--deps-->
-    <jgit.version>7.2.1.202505142326-r</jgit.version>
-    <semver4j.version>5.7.0</semver4j.version>
+    <jgit.version>7.3.0.202506031305-r</jgit.version>
+    <semver4j.version>5.7.1</semver4j.version>
 
     <!--plugins-->
-    <maven.version>3.9.9</maven.version>
+    <maven.version>3.9.10</maven.version>
     <plexus-component.version>2.2.0</plexus-component.version>
     <spotless.version>2.44.5</spotless.version>
     <javax.inject.version>1</javax.inject.version>
