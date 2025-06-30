@@ -26,7 +26,7 @@
 
     <!--deps-->
     <jgit.version>7.3.0.202506031305-r</jgit.version>
-    <semver4j.version>5.8.0</semver4j.version>
+    <semver4j.version>6.0.0</semver4j.version>
 
     <!--plugins-->
     <maven.version>3.9.10</maven.version>
