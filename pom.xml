@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 https://maven.apache.org/xsd/maven-4.1.0.xsd">
+
+  <modelVersion>4.1.0</modelVersion>
 
   <groupId>github.benslabbert</groupId>
   <artifactId>git-version-extension</artifactId>
@@ -29,7 +30,7 @@
     <semver4j.version>6.0.0</semver4j.version>
 
     <!--plugins-->
-    <maven.version>3.9.11</maven.version>
+    <maven.version>4.0.0-rc-5</maven.version>
     <plexus-component.version>2.2.0</plexus-component.version>
     <spotless.version>3.1.0</spotless.version>
     <javax.inject.version>1</javax.inject.version>
