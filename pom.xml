@@ -26,7 +26,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
     <!--deps-->
-    <jgit.version>7.4.0.202509020913-r</jgit.version>
+    <jgit.version>7.5.0.202512021534-r</jgit.version>
     <semver4j.version>6.0.0</semver4j.version>
 
     <!--plugins-->
