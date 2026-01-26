@@ -32,7 +32,7 @@
     <!--plugins-->
     <maven.version>4.0.0-rc-5</maven.version>
     <plexus-component.version>2.2.0</plexus-component.version>
-    <spotless.version>3.1.0</spotless.version>
+    <spotless.version>3.2.0</spotless.version>
     <javax.inject.version>1</javax.inject.version>
     <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
